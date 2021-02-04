@@ -51,5 +51,19 @@ afterEvaluate {
 				version = "1.0.0"
 			}
 		}
+		repositories {
+			maven {
+				name = "GitHubPackages"
+				url = uri("https://maven.pkg.github.com/SorrowBlue/AndroidJetpack")
+				credentials {
+					username =
+						project.findProperty("gpr.user")?.toString()
+							?: System.getenv("GITHUB_USERNAME")
+					password =
+						project.findProperty("gpr.token")?.toString()
+							?: System.getenv("GITHUB_PACKAGES_TOKEN")
+				}
+			}
+		}
 	}
 }

@@ -1,12 +1,11 @@
 name: "Publish library to GitHub Packages"
 on:
   push:
-    branches:
-      - master
     tags:
       - 'v*'
 jobs:
   build:
+    name: create release
     runs-on: ubuntu-latest
     steps:
       - name: checkout
@@ -21,19 +20,27 @@ jobs:
           TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: ./gradlew binding-ktx:publish
 
-      - name: Publish
+      - name: Get the version
+        id: get_version
+        run: echo ::set-output name=VERSION::${GITHUB_REF#refs/tags/}
+
+      - name: Get commit summary
+        id: get_commit_summary
+        run: |
+          PREVIOUS_TAG=$(git tag --sort=-creatordate | sed -n 2p)
+          echo "PREVIOUS_TAG: $PREVIOUS_TAG"
+          COMMIT_SUMMARY="$(git log --oneline --pretty=tformat:"%h %s" $PREVIOUS_TAG..${{ github.ref }})"
+          COMMIT_SUMMARY="${COMMIT_SUMMARY//$'\n'/'%0A'}"
+          echo ::set-output name=COMMIT_SUMMARY::$COMMIT_SUMMARY
+
+      - name: create release
         uses: actions/create-release@master
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          # リリースのタグ (必須)
-          tag_name: ${{ github.ref }}
-          # リリースのタイトル (必須)
-          release_name: ${{ github.ref }}
-          # リリースのタイトル (省略可能)
+          tag_name: ${{ steps.get_version.outputs.VERSION }}
+          release_name: Release ${{ steps.get_version.outputs.VERSION }}
           body: |
-            # Android Jetpack Ktx
-          # 下書き状態で作成する場合は true (省略時 false)
-          draft: true
-          # プレリリース表示を付ける場合は true (省略時 false)
-          prerelease: true
+            ${{ steps.get_commit_summary.outputs.COMMIT_SUMMARY }}
+          draft: false
+          prerelease: false
