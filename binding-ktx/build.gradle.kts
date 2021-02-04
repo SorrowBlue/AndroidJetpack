@@ -61,7 +61,7 @@ afterEvaluate {
 							?: System.getenv("GITHUB_USERNAME")
 					password =
 						project.findProperty("gpr.token")?.toString()
-							?: System.getenv("GITHUB_PACKAGES_TOKEN")
+							?: System.getenv("GITHUB_TOKEN")
 				}
 			}
 		}
