@@ -1,9 +1,5 @@
 <!--
-  ~ (c) 2020 SorrowBlue.
+  ~ (c) 2020-2021 SorrowBlue.
   -->
 
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-	package="com.sorrowblue.jetpack.binding">
-
-	/
-</manifest>
+<manifest package="com.sorrowblue.jetpack.binding" />

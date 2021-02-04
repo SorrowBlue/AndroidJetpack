@@ -1,18 +1,16 @@
 /*
- * (c) 2020 SorrowBlue.
+ * (c) 2020-2021 SorrowBlue.
  */
 
 plugins {
 	ComAndroidPluginGroup(this).library
 	`kotlin-android`
-	`kotlin-android-extensions`
 	`maven-publish`
 }
 
 android {
 	compileSdkVersion(30)
-	buildToolsVersion("30.0.2")
-
+	buildToolsVersion("30.0.3")
 	defaultConfig {
 		minSdkVersion(24)
 		targetSdkVersion(30)
@@ -37,8 +35,11 @@ android {
 }
 
 dependencies {
-	implementation(kotlin("stdlib-jdk8","1.4.10"))
-	implementation("androidx.fragment:fragment-ktx:1.3.0-alpha08")
+	implementation(kotlin("stdlib-jdk8","1.4.30"))
+	implementation("androidx.fragment:fragment-ktx:1.3.0-rc02")
+	testImplementation("junit:junit:4.13.1")
+	androidTestImplementation("androidx.test.ext:junit:1.1.2")
+	androidTestImplementation("androidx.test.espresso:espresso-core:3.3.0")
 }
 afterEvaluate {
 	publishing {

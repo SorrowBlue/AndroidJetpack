@@ -1,5 +1,5 @@
 /*
- * (c) 2020 SorrowBlue.
+ * (c) 2020-2021 SorrowBlue.
  */
 
 package com.sorrowblue.jetpack.binding

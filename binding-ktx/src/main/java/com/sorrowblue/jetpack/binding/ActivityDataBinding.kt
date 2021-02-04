@@ -1,5 +1,5 @@
 /*
- * (c) 2020 SorrowBlue.
+ * (c) 2020-2021 SorrowBlue.
  */
 
 package com.sorrowblue.jetpack.binding
@@ -18,6 +18,7 @@ fun <T : ViewDataBinding> FragmentActivity.dataBinding() = ActivityDataBinding<T
 
 class ActivityDataBinding<T : ViewDataBinding> internal constructor() :
     ReadOnlyProperty<FragmentActivity, T> {
+
     private var binding: T? = null
 
     override fun getValue(thisRef: FragmentActivity, property: KProperty<*>): T {
@@ -28,13 +29,20 @@ class ActivityDataBinding<T : ViewDataBinding> internal constructor() :
     }
 
     private fun FragmentActivity.getContentView(): View {
-        val view: ViewGroup =
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) requireViewById(android.R.id.content)
-            else findViewById(android.R.id.content)
+        val view: ViewGroup = getViewById(android.R.id.content)
         return checkNotNull(view.getChildAt(0)) {
             "Call setContentView or Use Activity's secondary constructor passing layout resource id."
         }
     }
 
     private fun <T : ViewDataBinding> bind(view: View): T = DataBindingUtil.bind(view)!!
+
+}
+
+internal fun <T : View> FragmentActivity.getViewById(id: Int): T {
+    return if (Build.VERSION_CODES.P <= Build.VERSION.SDK_INT) {
+        requireViewById(id)
+    } else {
+        findViewById(id)
+    }
 }
