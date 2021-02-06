@@ -16,8 +16,8 @@ jobs:
           java-version: 1.8
       - name: Build with Gradle
         env:
-          USERNAME: SorrowBlue
-          TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_USERNAME: ${{ github.actor }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: ./gradlew binding-ktx:publish
 
       - name: Get the version
@@ -36,8 +36,7 @@ jobs:
       - name: create release
         uses: actions/create-release@master
         env:
-          GITHUB_USERNAME: ${{ secrets.GITHUB_TOKEN }}
-          GITHUB_TOKEN: ${{ github.actor }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           tag_name: ${{ steps.get_version.outputs.VERSION }}
           release_name: Release ${{ steps.get_version.outputs.VERSION }}
