@@ -36,7 +36,8 @@ jobs:
       - name: create release
         uses: actions/create-release@master
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_USERNAME: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ github.actor }}
         with:
           tag_name: ${{ steps.get_version.outputs.VERSION }}
           release_name: Release ${{ steps.get_version.outputs.VERSION }}
