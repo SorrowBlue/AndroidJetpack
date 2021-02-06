@@ -53,8 +53,6 @@ afterEvaluate {
                         ?: System.getenv("GITHUB_USERNAME")
                     password = project.findProperty("gpr.token")?.toString()
                         ?: System.getenv("GITHUB_TOKEN")
-                    println(username)
-                    println(password)
                 }
             }
         }
@@ -63,7 +61,7 @@ afterEvaluate {
                 from(components.getByName("release"))
                 groupId = "com.sorrowblue.jetpack"
                 artifactId = "binding-ktx"
-                version = "1.0.0-dev-004"
+                version = "2.0.0"
             }
         }
     }
