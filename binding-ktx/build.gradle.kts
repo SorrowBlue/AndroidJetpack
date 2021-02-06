@@ -63,7 +63,7 @@ afterEvaluate {
                 from(components.getByName("release"))
                 groupId = "com.sorrowblue.jetpack"
                 artifactId = "binding-ktx"
-                version = "1.0.0-dev-003"
+                version = "1.0.0-dev-004"
             }
         }
     }
