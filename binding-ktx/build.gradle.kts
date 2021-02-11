@@ -20,7 +20,7 @@ android {
     }
 
     buildTypes {
-        val release by getting {
+        @Suppress("UNUSED_VARIABLE") val release by getting {
             isMinifyEnabled = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro"
@@ -61,7 +61,7 @@ afterEvaluate {
                 from(components.getByName("release"))
                 groupId = "com.sorrowblue.jetpack"
                 artifactId = "binding-ktx"
-                version = "2.0.1"
+                version = "2.0.2"
             }
         }
     }

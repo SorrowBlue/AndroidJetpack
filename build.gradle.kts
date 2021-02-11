@@ -9,11 +9,10 @@ plugins {
 buildscript {
 	repositories {
 		google()
-		jcenter()
 		mavenLocal()
 	}
 	dependencies {
-		classpath("com.android.tools.build:gradle:4.1.2")
+		classpath("com.android.tools.build:gradle:7.0.0-alpha05")
 		classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:1.4.30")
 	}
 }
@@ -21,7 +20,7 @@ buildscript {
 allprojects {
 	repositories {
 		google()
-		jcenter()
+		mavenCentral()
 	}
 }
 
