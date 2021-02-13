@@ -126,7 +126,6 @@ class MavenCentralRepository : Plugin<Project> {
                 ext["ossrhUsername"] = System.getenv("OSSRH_USERNAME")
                 ext["ossrhPassword"] = System.getenv("OSSRH_PASSWORD")
                 ext["sonatypeStagingProfileId"] = System.getenv("SONATYPE_STAGING_PROFILE_ID")
-
             }
         }
     }

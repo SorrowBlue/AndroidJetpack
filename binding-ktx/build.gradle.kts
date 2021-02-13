@@ -5,7 +5,6 @@
 plugins {
     ComAndroidPluginGroup(this).library
     `kotlin-android`
-//    `maven-publish`
 }
 
 android {
@@ -43,6 +42,10 @@ dependencies {
     androidTestImplementation("androidx.test.ext:junit:1.1.2")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.3.0")
 }
+
+ext["PUBLISH_GROUP_ID"] = project.property("PUBLISH_GROUP_ID")
+ext["PUBLISH_ARTIFACT_ID"] = project.property("PUBLISH_ARTIFACT_ID")
+ext["PUBLISH_VERSION"] = project.property("PUBLISH_VERSION")
 
 afterEvaluate {
     apply<MavenCentralRepository>()
