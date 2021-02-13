@@ -13,5 +13,6 @@ repositories {
 
 dependencies {
     implementation("com.android.tools.build:gradle:7.0.0-alpha06")
-    implementation("org.jetbrains.kotlin:kotlin-gradle-plugin:1.4.30")
+    implementation(kotlin("gradle-plugin", "1.4.30"))
+    implementation("io.codearte.gradle.nexus:gradle-nexus-staging-plugin:0.22.0")
 }

@@ -14,11 +14,21 @@ jobs:
         uses: actions/setup-java@v1
         with:
           java-version: 11
+      - name: save PGP
+        run: |
+          echo "${{ secrets.SORROW_BLUE_XXXXXXXX_SECRET }}" > SorrowBlue_0xXXXXXXXX_SECRET.pgp
+          gpg -d --passphrase "${{ secrets.SIGNING_PASSWORD }}" --batch SorrowBlue_0xXXXXXXXX_SECRET.pgp >  ${{ secrets.SIGNING_SECRET_KEY_RING_FILE }}
       - name: Build with Gradle
         env:
           GITHUB_USERNAME: ${{ github.actor }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: ./gradlew binding-ktx:publish
+          SIGNING_KEY_ID: ${{ secrets.SIGNING_KEY_ID }}
+          SIGNING_PASSWORD: ${{ secrets.SIGNING_PASSWORD }}
+          SIGNING_SECRET_KEY_RING_FILE: ${{ secrets.SIGNING_SECRET_KEY_RING_FILE }}
+          OSSRH_USERNAME: ${{ secrets.OSSRH_USERNAME }}
+          OSSRH_PASSWORD: ${{ secrets.OSSRH_PASSWORD }}
+          SONATYPE_STAGING_PROFILE_ID: ${{ secrets.SONATYPE_STAGING_PROFILE_ID }}
+        run: ./gradlew binding-ktx:publishReleasePublicationToSonatypeRepository binding-ktx:publishReleasePublicationToGitHubPackagesRepository binding-ktx:closeAndReleaseRepository
 
       - name: Get the version
         id: get_version

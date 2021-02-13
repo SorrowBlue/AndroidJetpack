@@ -16,9 +16,10 @@ import kotlin.properties.ReadOnlyProperty
 import kotlin.reflect.KProperty
 
 @Suppress("unused")
-inline fun <reified T : ViewDataBinding> Fragment.dataBinding() =
+fun <T : ViewDataBinding> Fragment.dataBinding() =
     object : ReadOnlyProperty<Fragment, T> {
 
+        @Suppress("UNCHECKED_CAST")
         override fun getValue(thisRef: Fragment, property: KProperty<*>): T =
             thisRef.requireView().getTag(property.name.hashCode()) as? T
                 ?: bind(thisRef.requireView()).also {

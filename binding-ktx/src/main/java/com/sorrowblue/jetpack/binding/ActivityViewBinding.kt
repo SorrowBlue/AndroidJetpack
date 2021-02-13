@@ -15,7 +15,6 @@ import androidx.viewbinding.ViewBinding
 import kotlin.properties.ReadOnlyProperty
 import kotlin.reflect.KProperty
 
-@Suppress("unused")
 inline fun <reified T : ViewBinding> FragmentActivity.viewBinding() =
     object : ReadOnlyProperty<FragmentActivity, T> {
 
@@ -34,13 +33,10 @@ inline fun <reified T : ViewBinding> FragmentActivity.viewBinding() =
         }
 
         override fun getValue(thisRef: FragmentActivity, property: KProperty<*>): T =
-            kotlin.runCatching {
+            binding ?: kotlin.runCatching {
                 thisRef.requireView().getTag(property.name.hashCode()) as? T
                     ?: bind(thisRef.requireView()).also {
-                        it.root.setTag(
-                            property.name.hashCode(),
-                            it
-                        )
+                        it.root.setTag(property.name.hashCode(), it)
                     }
             }.getOrElse {
                 binding ?: inflate().also { binding = it }
@@ -58,7 +54,6 @@ inline fun <reified T : ViewBinding> FragmentActivity.viewBinding() =
                 Boolean::class.java
             ).invoke(null, inflater, null, false) as T
         }
-
     }
 
 fun FragmentActivity.requireView(): View {

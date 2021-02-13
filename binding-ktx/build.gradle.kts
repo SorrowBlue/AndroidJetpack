@@ -5,7 +5,7 @@
 plugins {
     ComAndroidPluginGroup(this).library
     `kotlin-android`
-    `maven-publish`
+//    `maven-publish`
 }
 
 android {
@@ -14,13 +14,13 @@ android {
     defaultConfig {
         minSdkVersion(24)
         targetSdkVersion(30)
-
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
     }
 
     buildTypes {
-        @Suppress("UNUSED_VARIABLE") val release by getting {
+        @Suppress("UNUSED_VARIABLE")
+        val release by getting {
             isMinifyEnabled = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro"
@@ -45,26 +45,6 @@ dependencies {
 }
 
 afterEvaluate {
-    publishing {
-        repositories {
-            maven {
-                name = "GitHubPackages"
-                url = uri("https://maven.pkg.github.com/SorrowBlue/AndroidJetpack")
-                credentials {
-                    username = project.findProperty("gpr.user")?.toString()
-                        ?: System.getenv("GITHUB_USERNAME")
-                    password = project.findProperty("gpr.token")?.toString()
-                        ?: System.getenv("GITHUB_TOKEN")
-                }
-            }
-        }
-        publications {
-            create<MavenPublication>("release") {
-                from(components.getByName("release"))
-                groupId = "com.sorrowblue.jetpack"
-                artifactId = "binding-ktx"
-                version = "2.2.0"
-            }
-        }
-    }
+    apply<MavenCentralRepository>()
+    apply<GithubPackagesRepository>()
 }

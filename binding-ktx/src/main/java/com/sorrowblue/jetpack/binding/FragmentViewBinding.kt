@@ -7,7 +7,6 @@ package com.sorrowblue.jetpack.binding
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.annotation.LayoutRes
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.LifecycleOwner
@@ -35,13 +34,12 @@ inline fun <reified T : ViewBinding> Fragment.viewBinding() =
         }
 
         override fun getValue(thisRef: Fragment, property: KProperty<*>): T =
-            kotlin.runCatching {
+            binding ?: kotlin.runCatching {
                 thisRef.requireView().getTag(property.name.hashCode()) as? T
                     ?: bind(thisRef.requireView()).also {
                         it.root.setTag(property.name.hashCode(), it)
                     }
             }.getOrElse { binding ?: inflate().also { binding = it } }
-
 
         private fun bind(view: View): T =
             T::class.java.getMethod("bind", View::class.java).invoke(null, view) as T
