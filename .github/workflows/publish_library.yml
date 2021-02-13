@@ -15,18 +15,20 @@ jobs:
         with:
           java-version: 11
       - name: copy pgp
-        env:
-          SORROW_BLUE_XXXXXXXX_SECRET: ${{ secrets.SORROW_BLUE_XXXXXXXX_SECRET }}
-        run: echo $SORROW_BLUE_XXXXXXXX_SECRET | base64 --decode --ignore-garbage > ${{ secrets.SIGNING_SECRET_KEY_RING_FILE }}
-      - name: list
-        run: ls ${{ secrets.SIGNING_SECRET_KEY_RING_FILE }}
+        id: write_file
+        uses: timheuer/base64-to-file@v1
+        with:
+          fileName: ${{ secrets.SIGNING_SECRET_KEY_RING_FILE }}'
+          encodedString: ${{ secrets.SORROW_BLUE_XXXXXXXX_SECRET }}
+      - name: echo
+        run: echo ${{ steps.write_file.outputs.filePath }}
       - name: Build with Gradle
         env:
           GITHUB_USERNAME: ${{ github.actor }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SIGNING_KEY_ID: ${{ secrets.SIGNING_KEY_ID }}
           SIGNING_PASSWORD: ${{ secrets.SIGNING_PASSWORD }}
-          SIGNING_SECRET_KEY_RING_FILE: ${{ secrets.SIGNING_SECRET_KEY_RING_FILE }}
+          SIGNING_SECRET_KEY_RING_FILE: ${{ steps.write_file.outputs.filePath }}
           OSSRH_USERNAME: ${{ secrets.OSSRH_USERNAME }}
           OSSRH_PASSWORD: ${{ secrets.OSSRH_PASSWORD }}
           SONATYPE_STAGING_PROFILE_ID: ${{ secrets.SONATYPE_STAGING_PROFILE_ID }}
