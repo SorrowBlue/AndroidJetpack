@@ -16,8 +16,7 @@ jobs:
           java-version: 11
       - name: save PGP
         run: |
-          echo "${{ secrets.SORROW_BLUE_XXXXXXXX_SECRET }}" > SorrowBlue_0xXXXXXXXX_SECRET.pgp
-          gpg -d --passphrase "${{ secrets.SIGNING_PASSWORD }}" --batch SorrowBlue_0xXXXXXXXX_SECRET.pgp >  ${{ secrets.SIGNING_SECRET_KEY_RING_FILE }}
+          echo "${{ secrets.SORROW_BLUE_XXXXXXXX_SECRET }}" | base64 -d "${{ secrets.SIGNING_SECRET_KEY_RING_FILE }}"
       - name: Build with Gradle
         env:
           GITHUB_USERNAME: ${{ github.actor }}
