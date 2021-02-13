@@ -14,11 +14,12 @@ jobs:
         uses: actions/setup-java@v1
         with:
           java-version: 11
-      - name: decode file
-        uses: timheuer/base64-to-file@v1
-        with:
-          fileName: "${{ secrets.SIGNING_SECRET_KEY_RING_FILE }}"
-          encodedString: ${{ secrets.SORROW_BLUE_XXXXXXXX_SECRET }}
+      - name: copy pgp
+        env:
+          SORROW_BLUE_XXXXXXXX_SECRET: ${{ secrets.SORROW_BLUE_XXXXXXXX_SECRET }}
+        run: echo $SORROW_BLUE_XXXXXXXX_SECRET | base64 --decode --ignore-garbage > ${{ secrets.SIGNING_SECRET_KEY_RING_FILE }}
+      - name: list
+        run: ls ${{ secrets.SIGNING_SECRET_KEY_RING_FILE }}
       - name: Build with Gradle
         env:
           GITHUB_USERNAME: ${{ github.actor }}
