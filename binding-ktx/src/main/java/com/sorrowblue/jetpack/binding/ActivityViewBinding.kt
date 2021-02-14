@@ -4,63 +4,42 @@
 
 package com.sorrowblue.jetpack.binding
 
-import android.os.Build
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.FragmentActivity
-import androidx.lifecycle.DefaultLifecycleObserver
-import androidx.lifecycle.LifecycleOwner
+import androidx.activity.ComponentActivity
+import androidx.annotation.RestrictTo
+import androidx.annotation.RestrictTo.Scope.LIBRARY_GROUP
+import androidx.core.view.get
 import androidx.viewbinding.ViewBinding
-import kotlin.properties.ReadOnlyProperty
-import kotlin.reflect.KProperty
 
-inline fun <reified T : ViewBinding> FragmentActivity.viewBinding() =
-    object : ReadOnlyProperty<FragmentActivity, T> {
 
-        private var binding: T? = null
+@Suppress("unused")
+inline fun <reified V : ViewBinding> ComponentActivity.viewBinding() =
+    object : AndroidLifecycleViewBindingProperty<ComponentActivity, V>() {
 
-        init {
-            lifecycle.addObserver(object : DefaultLifecycleObserver {
-                override fun onCreate(owner: LifecycleOwner) {
-                    lifecycle.addObserver(object : DefaultLifecycleObserver {
-                        override fun onDestroy(owner: LifecycleOwner) {
-                            binding = null
-                        }
-                    })
+        override fun bind(thisRef: ComponentActivity): V {
+            return thisRef.findContentView()?.let { ViewBindingUtil.bind(it) }
+                ?: (ViewBindingUtil.inflate(LayoutInflater.from(thisRef)) as V).also {
+                    Log.i(
+                        "binding-ktx",
+                        "The ${thisRef.javaClass.simpleName} has no children. Use the ${V::class.java.simpleName}::inflate to generate a View with inflating."
+                    )
+                    thisRef.setContentView(it.root)
                 }
-            })
         }
 
-        override fun getValue(thisRef: FragmentActivity, property: KProperty<*>): T =
-            binding ?: kotlin.runCatching {
-                thisRef.requireView().getTag(property.name.hashCode()) as? T
-                    ?: bind(thisRef.requireView()).also {
-                        it.root.setTag(property.name.hashCode(), it)
-                    }
-            }.getOrElse {
-                binding ?: inflate().also { binding = it }
-            }
-
-        private fun bind(view: View): T =
-            T::class.java.getMethod("bind", View::class.java).invoke(null, view) as T
-
-        private fun inflate(): T {
-            val inflater = LayoutInflater.from(this@viewBinding)
-            return T::class.java.getMethod(
-                "inflate",
-                LayoutInflater::class.java,
-                ViewGroup::class.java,
-                Boolean::class.java
-            ).invoke(null, inflater, null, false) as T
-        }
+        override fun getLifecycleOwner(thisRef: ComponentActivity) = thisRef
     }
 
-fun FragmentActivity.requireView(): View {
-    val view: ViewGroup =
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) requireViewById(android.R.id.content)
-        else findViewById(android.R.id.content)
-    return checkNotNull(view.getChildAt(0)) {
-        "Call setContentView or Use Activity's secondary constructor passing layout resource id."
+@RestrictTo(LIBRARY_GROUP)
+fun <T : ComponentActivity> T.findContentView(): View? {
+    val contentView = findViewById<ViewGroup>(android.R.id.content)
+    checkNotNull(contentView) { "The activity(${javaClass.simpleName}) has no view." }
+    return when (contentView.childCount) {
+        1 -> contentView[0]
+        0 -> null
+        else -> error("Multiple child views found in the activity(${javaClass.simpleName}) content view.")
     }
 }

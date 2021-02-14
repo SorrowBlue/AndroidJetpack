@@ -5,28 +5,53 @@
 
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/FirstFragment">
-
+    app:startDestination="@id/firstFragment">
     <fragment
-        android:id="@+id/FirstFragment"
+        android:id="@+id/firstFragment"
         android:name="com.sorrowblue.jetpack.sample.FirstFragment"
-        android:label="@string/first_fragment_label"
-        tools:layout="@layout/fragment_first">
-
+        android:label="FirstFragment">
         <action
-            android:id="@+id/action_FirstFragment_to_SecondFragment"
-            app:destination="@id/SecondFragment" />
+            android:id="@+id/action_firstFragment_to_viewBindingFragment"
+            app:destination="@id/viewBindingFragment" />
+        <action
+            android:id="@+id/action_firstFragment_to_viewBindingDialogFragment"
+            app:destination="@id/viewBindingDialogFragment" />
+        <action
+            android:id="@+id/action_firstFragment_to_materialDataBindingDialogFragment2"
+            app:destination="@id/materialDataBindingDialogFragment2" />
+        <action
+            android:id="@+id/action_firstFragment_to_dataBindingFragment"
+            app:destination="@id/dataBindingFragment" />
+        <action
+            android:id="@+id/action_firstFragment_to_dataBindingDialogFragment"
+            app:destination="@id/dataBindingDialogFragment" />
+        <action
+            android:id="@+id/action_firstFragment_to_materialViewBindingDialogFragment2"
+            app:destination="@id/materialViewBindingDialogFragment2" />
     </fragment>
+    <dialog
+        android:id="@+id/dataBindingDialogFragment"
+        android:name="com.sorrowblue.jetpack.sample.DataBindingDialogFragment"
+        android:label="DataBindingDialogFragment" />
     <fragment
-        android:id="@+id/SecondFragment"
-        android:name="com.sorrowblue.jetpack.sample.SecondFragment"
-        android:label="@string/second_fragment_label"
-        tools:layout="@layout/fragment_second">
-
-        <action
-            android:id="@+id/action_SecondFragment_to_FirstFragment"
-            app:destination="@id/FirstFragment" />
-    </fragment>
+        android:id="@+id/dataBindingFragment"
+        android:name="com.sorrowblue.jetpack.sample.DataBindingFragment"
+        android:label="DataBindingFragment" />
+    <dialog
+        android:id="@+id/materialDataBindingDialogFragment2"
+        android:name="com.sorrowblue.jetpack.sample.MaterialDataBindingDialogFragment"
+        android:label="MaterialDataBindingDialogFragment" />
+    <dialog
+        android:id="@+id/materialViewBindingDialogFragment2"
+        android:name="com.sorrowblue.jetpack.sample.MaterialViewBindingDialogFragment"
+        android:label="MaterialViewBindingDialogFragment" />
+    <dialog
+        android:id="@+id/viewBindingDialogFragment"
+        android:name="com.sorrowblue.jetpack.sample.ViewBindingDialogFragment"
+        android:label="ViewBindingDialogFragment" />
+    <fragment
+        android:id="@+id/viewBindingFragment"
+        android:name="com.sorrowblue.jetpack.sample.ViewBindingFragment"
+        android:label="ViewBindingFragment" />
 </navigation>

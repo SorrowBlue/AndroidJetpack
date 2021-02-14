@@ -47,7 +47,7 @@ class MavenCentralRepository : Plugin<Project> {
                     groupId = ext["PUBLISH_GROUP_ID"].toString()
                     artifactId = ext["PUBLISH_ARTIFACT_ID"].toString()
                     version = ext["PUBLISH_VERSION"].toString()
-                    artifact("$buildDir/outputs/aar/${project.getName()}-release.aar")
+                    artifact("$buildDir/outputs/aar/${project.name}-release.aar")
                     artifact(androidSourcesJar)
 
                     pom {
@@ -62,7 +62,7 @@ class MavenCentralRepository : Plugin<Project> {
                         }
                         developers {
                             developer {
-                                id.set("zsmb13")
+                                id.set("sorrowblue_sb")
                                 name.set("Sorrow Blue")
                                 email.set("sorrowblue.sb@gmail.com")
                             }
@@ -75,7 +75,7 @@ class MavenCentralRepository : Plugin<Project> {
                         withXml {
                             val dependenciesNode = asNode().appendNode("dependencies")
 
-                            project.configurations.get("implementation").allDependencies.forEach {
+                            project.configurations["implementation"].allDependencies.forEach {
                                 val dependencyNode = dependenciesNode.appendNode("dependency")
                                 dependencyNode.appendNode("groupId", it.group)
                                 dependencyNode.appendNode("artifactId", it.name)

@@ -5,14 +5,10 @@
 package com.sorrowblue.jetpack.sample
 
 import android.os.Bundle
-import android.util.Log
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.navigation.fragment.findNavController
-import com.google.android.material.snackbar.Snackbar
-import com.sorrowblue.jetpack.binding.dataBinding
+import androidx.navigation.findNavController
+import com.sorrowblue.jetpack.binding.viewBinding
 import com.sorrowblue.jetpack.sample.databinding.FragmentFirstBinding
 
 /**
@@ -20,7 +16,7 @@ import com.sorrowblue.jetpack.sample.databinding.FragmentFirstBinding
  */
 class FirstFragment : Fragment(R.layout.fragment_first) {
 
-    private val binding: FragmentFirstBinding by dataBinding()
+    private val binding: FragmentFirstBinding by viewBinding()
 
 //    override fun onCreateView(
 //        inflater: LayoutInflater, container: ViewGroup?,
@@ -31,8 +27,15 @@ class FirstFragment : Fragment(R.layout.fragment_first) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.buttonFirst.setOnClickListener {
-            findNavController().navigate(R.id.action_FirstFragment_to_SecondFragment)
-        }
+        binding.buttonDialogData.onClickNavigate(R.id.action_firstFragment_to_dataBindingDialogFragment)
+        binding.buttonDialogView.onClickNavigate(R.id.action_firstFragment_to_viewBindingDialogFragment)
+        binding.buttonFragmentData.onClickNavigate(R.id.action_firstFragment_to_dataBindingFragment)
+        binding.buttonFragmentView.onClickNavigate(R.id.action_firstFragment_to_viewBindingFragment)
+        binding.buttonMaterialDialogData.onClickNavigate(R.id.action_firstFragment_to_materialDataBindingDialogFragment2)
+        binding.buttonMaterialDialogView.onClickNavigate(R.id.action_firstFragment_to_materialViewBindingDialogFragment2)
     }
+}
+
+private fun View.onClickNavigate(actionId: Int) = setOnClickListener {
+    findNavController().navigate(actionId)
 }

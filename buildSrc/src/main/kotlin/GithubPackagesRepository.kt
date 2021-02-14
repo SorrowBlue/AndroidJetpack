@@ -3,7 +3,6 @@
  */
 
 import org.gradle.api.Plugin
-import org.gradle.api.PolymorphicDomainObjectContainer
 import org.gradle.api.Project
 import org.gradle.api.publish.maven.MavenPublication
 import org.gradle.kotlin.dsl.apply
@@ -39,10 +38,3 @@ class GithubPackagesRepository : Plugin<Project> {
         }
     }
 }
-
-inline fun <reified U : Any> PolymorphicDomainObjectContainer<in U>.create(
-    name: String,
-    noinline configuration: U.() -> Unit
-) =
-
-    this.create(name, U::class.java, configuration)
