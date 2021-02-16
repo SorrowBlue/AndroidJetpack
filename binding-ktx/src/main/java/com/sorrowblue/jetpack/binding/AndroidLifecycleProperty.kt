@@ -9,6 +9,7 @@ import android.os.Looper
 import androidx.annotation.MainThread
 import androidx.annotation.RestrictTo
 import androidx.annotation.RestrictTo.Scope.LIBRARY_GROUP
+import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleOwner
@@ -29,6 +30,9 @@ abstract class AndroidLifecycleViewBindingProperty<T, V : ViewBinding> : ReadOnl
             lifecycle.addObserver(object : DefaultLifecycleObserver {
                 override fun onDestroy(owner: LifecycleOwner) = clear()
             })
+            if (binding is ViewDataBinding) {
+                binding.lifecycleOwner = getLifecycleOwner(thisRef)
+            }
             this.binding = binding
         }
         return binding
