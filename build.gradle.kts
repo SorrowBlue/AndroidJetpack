@@ -3,7 +3,7 @@
  */
 
 plugins {
-	id("com.github.ben-manes.versions").version("0.31.0")
+	id("com.github.ben-manes.versions").version("0.39.0")
 }
 
 buildscript {
@@ -12,16 +12,9 @@ buildscript {
 		mavenLocal()
 	}
 	dependencies {
-		classpath("com.android.tools.build:gradle:7.0.0-alpha06")
-		classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:1.4.30")
+		classpath("com.android.tools.build:gradle:7.0.3")
+		classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:1.5.31")
 		classpath("io.codearte.gradle.nexus:gradle-nexus-staging-plugin:0.22.0")
-	}
-}
-
-allprojects {
-	repositories {
-		google()
-		mavenCentral()
 	}
 }
 

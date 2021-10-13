@@ -8,11 +8,11 @@ plugins {
 }
 
 android {
-    compileSdkVersion(30)
-    buildToolsVersion("30.0.3")
+    compileSdk = 31
+    buildToolsVersion = "31.0.0"
     defaultConfig {
-        minSdkVersion(24)
-        targetSdkVersion(30)
+        minSdk = 24
+        targetSdk = 31
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
     }
@@ -34,13 +34,13 @@ android {
 }
 
 dependencies {
-    implementation(kotlin("stdlib-jdk8", "1.4.30"))
-    implementation("androidx.fragment:fragment-ktx:1.3.0-rc02")
-    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.3.0")
-    implementation("androidx.lifecycle:lifecycle-common-java8:2.3.0")
-    testImplementation("junit:junit:4.13.1")
-    androidTestImplementation("androidx.test.ext:junit:1.1.2")
-    androidTestImplementation("androidx.test.espresso:espresso-core:3.3.0")
+    implementation(kotlin("stdlib-jdk8", "1.5.31"))
+    implementation("androidx.fragment:fragment-ktx:1.4.0-alpha10")
+    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.4.0-rc01")
+    implementation("androidx.lifecycle:lifecycle-common-java8:2.4.0-rc01")
+    testImplementation("junit:junit:4.13.2")
+    androidTestImplementation("androidx.test.ext:junit:1.1.3")
+    androidTestImplementation("androidx.test.espresso:espresso-core:3.4.0")
 }
 
 ext["PUBLISH_GROUP_ID"] = project.property("PUBLISH_GROUP_ID")

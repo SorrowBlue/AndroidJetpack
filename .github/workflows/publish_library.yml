@@ -20,8 +20,6 @@ jobs:
         with:
           fileName: ${{ secrets.SIGNING_SECRET_KEY_RING_FILE }}'
           encodedString: ${{ secrets.SORROW_BLUE_XXXXXXXX_SECRET }}
-      - name: echo
-        run: echo "${{ steps.write_file.outputs.filePath }}"
       - name: Build with Gradle
         env:
           GITHUB_USERNAME: ${{ github.actor }}
