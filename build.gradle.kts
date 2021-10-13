@@ -3,7 +3,9 @@
  */
 
 plugins {
-	id("com.github.ben-manes.versions").version("0.39.0")
+	id("com.github.ben-manes.versions") version "0.39.0"
+	id("io.github.gradle-nexus.publish-plugin") version "1.1.0"
+	id("org.ajoberstar.grgit") version "4.1.0"
 }
 
 buildscript {
@@ -13,8 +15,15 @@ buildscript {
 	}
 	dependencies {
 		classpath("com.android.tools.build:gradle:7.0.3")
-		classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:1.5.31")
-		classpath("io.codearte.gradle.nexus:gradle-nexus-staging-plugin:0.22.0")
+		classpath(kotlin("gradle-plugin", "1.5.31"))
+	}
+}
+
+nexusPublishing {
+	repositories {
+		sonatype {
+			stagingProfileId.set(findProperty("sonatypeStagingProfileId") as? String)
+		}
 	}
 }
 

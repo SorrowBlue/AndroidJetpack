@@ -14,7 +14,9 @@ import androidx.annotation.RestrictTo.Scope.LIBRARY_GROUP
 import androidx.core.view.get
 import androidx.viewbinding.ViewBinding
 
-
+/**
+ * Set the activity content from a ViewBinding.
+ */
 @Suppress("unused")
 inline fun <reified V : ViewBinding> ComponentActivity.viewBinding() =
     object : AndroidLifecycleViewBindingProperty<ComponentActivity, V>() {

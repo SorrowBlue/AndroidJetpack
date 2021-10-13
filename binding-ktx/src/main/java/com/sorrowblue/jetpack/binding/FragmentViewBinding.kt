@@ -9,6 +9,9 @@ import android.view.LayoutInflater
 import androidx.fragment.app.Fragment
 import androidx.viewbinding.ViewBinding
 
+/**
+ * Set the activity content from a ViewBinding.
+ */
 inline fun <reified V : ViewBinding> Fragment.viewBinding() =
     object : AndroidLifecycleViewBindingProperty<Fragment, V>() {
 
