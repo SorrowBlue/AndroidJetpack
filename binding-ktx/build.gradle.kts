@@ -22,6 +22,7 @@ fun String.toVersion() = this + if (matches(".*-[0-9]+-g[0-9a-f]{7}".toRegex()))
 
 android {
     compileSdk = 33
+    namespace = "com.sorrowblue.jetpack.binding"
     defaultConfig {
         minSdk = 24
         targetSdk = 33

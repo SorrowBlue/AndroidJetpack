@@ -10,6 +10,7 @@ plugins {
 
 android {
     compileSdk = 33
+    namespace = "com.sorrowblue.jetpack.sample"
 
     defaultConfig {
         applicationId = "com.sorrowblue.jetpack"
