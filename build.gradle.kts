@@ -3,9 +3,9 @@
  */
 
 plugins {
-	id("com.github.ben-manes.versions") version "0.39.0"
+	id("com.github.ben-manes.versions") version "0.43.0"
 	id("io.github.gradle-nexus.publish-plugin") version "1.1.0"
-	id("org.ajoberstar.grgit") version "4.1.0"
+	id("org.ajoberstar.grgit") version "5.0.0"
 }
 
 buildscript {
@@ -14,8 +14,8 @@ buildscript {
 		mavenLocal()
 	}
 	dependencies {
-		classpath("com.android.tools.build:gradle:7.0.3")
-		classpath(kotlin("gradle-plugin", "1.5.31"))
+		classpath("com.android.tools.build:gradle:7.3.1")
+		classpath(kotlin("gradle-plugin", "1.7.20"))
 	}
 }
 
