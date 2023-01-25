@@ -5,18 +5,11 @@
 plugins {
 	id("com.github.ben-manes.versions") version "0.43.0"
 	id("io.github.gradle-nexus.publish-plugin") version "1.1.0"
-	id("org.ajoberstar.grgit") version "5.0.0"
-}
-
-buildscript {
-	repositories {
-		google()
-		mavenLocal()
-	}
-	dependencies {
-		classpath("com.android.tools.build:gradle:7.3.1")
-		classpath(kotlin("gradle-plugin", "1.7.20"))
-	}
+	id("org.ajoberstar.grgit") version "5.0.0" apply false
+	id("com.android.application") version "7.4.0" apply false
+	id("com.android.library") version "7.4.0" apply false
+	kotlin("android") version "1.8.0" apply false
+	kotlin("kapt") version "1.8.0" apply false
 }
 
 nexusPublishing {
