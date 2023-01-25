@@ -17,7 +17,7 @@ import androidx.viewbinding.ViewBinding
 /**
  * Set the activity content from a ViewBinding.
  */
-@Suppress("unused")
+@Suppress("UnusedReceiverParameter")
 inline fun <reified V : ViewBinding> ComponentActivity.viewBinding() =
     object : AndroidLifecycleViewBindingProperty<ComponentActivity, V>() {
 
